@@ -1,0 +1,36 @@
+
+$colorPaletteSettings: (
+  moderate-blue: hsl(238, 40%, 52%),
+  light-blue: #f5f6fa,
+  dark-blue: hsl(212, 24%, 26%),
+  grey-blue: hsl(211, 10%, 45%),
+  
+
+  soft-red: hsl(358, 79%, 66%),
+  pale-red: hsl(357, 100%, 86%),
+
+
+
+  core-white: #fff,
+  core-lightest-grey: #fafafa,
+  core-lighter-grey: hsl(228, 33%, 97%),
+  core-light-grey: hsl(223, 19%, 93%),
+  core-grey: #aaaaaa,
+  core-dark-grey: #3c3c3c,
+  core-darker-grey: #2c2c2c,
+  core-darkest-grey: #212121,
+  core-black: #000,
+
+  core-red-card-loss-error: #fe0000,
+  core-success-win: #77a64b,
+  core-yellow-card: #fed800
+);
+
+@function colorPaletteSetting($key) {
+  @if map-has-key($colorPaletteSettings, $key) {
+    @return map-get($colorPaletteSettings, $key);
+  }
+
+  @warn "Unknown `#{$key}` in $colorPaletteSettings.";
+  @return null;
+}
