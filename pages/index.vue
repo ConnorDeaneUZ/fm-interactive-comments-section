@@ -7,41 +7,19 @@
       <comment-card
       @deleteComment="deleteComment"
       :comment="comment.content"
-      :index="index"/>
-
-      <div class="reply-card" v-for="(reply, index) in comment.replies" :key="index">
-        <reply-card
-        @deleteReply="deleteReply"
-        :reply="reply.content"
-        :index="index"
-        :commentIndex="comment.index"/>
-
-      </div>
-
-      <!-- <pre>
-        {{comment}}
-
-      <form>
-        <input name="vitalInformation" v-model="replyInput" v-on:submit.prevent="submitForm">
-        <a href="#" v-on:click="replyComment(replyInput, index)">SUBMIT</a>
-      </form>
-
-      <form>
-        <a href="#" v-on:click="deleteComment(index)">DELETE</a>
-      </form>
-      </pre> -->
-
-      <!-- <form>
-        <a href="#" @deleteComment="deleteComment">DELETE</a>
-      </form> -->
+      :index="index"
+      :replies="comment.replies"
+      />
 
     </div>
 
-      <form>
+    <profile-card
+    @postComment="postComment" />
+
+      <!-- <form>
         <input name="vitalInformation" v-model="input" v-on:submit.prevent="submitForm">
         <a href="#" v-on:click="postComment(input)">SUBMIT</a>
-      </form>
-
+      </form> -->
 
     </div>
 
@@ -51,6 +29,7 @@
 
 <script>
 import commentCard from '../components/commentCard.vue'
+import ProfileCard from '../components/profileCard.vue'
 import replyCard from '../components/replyCard.vue'
 import comments from '/config/data.json'
 
@@ -59,13 +38,12 @@ export default {
 
   components: {
     commentCard,
-    replyCard
+    replyCard,
+    ProfileCard
   },
 
   data: () => ({
     comments: comments.comments,
-    input: '',
-    replyInput:''
   }),
 
   methods: {
@@ -81,12 +59,6 @@ export default {
       console.log('Index here', index)
       console.log("COMMENT INDEX", this.comments[index])
       this.comments.splice(index, 1)
-    },
-
-    deleteReply(index, commentIndex) {
-      console.log('COMMENTS INDEX', commentIndex)
-      console.log('Reply INDEX', index)
-      this.comments[1].replies.splice(index, 1)
     }
   }
 }
