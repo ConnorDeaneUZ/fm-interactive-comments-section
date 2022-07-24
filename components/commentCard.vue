@@ -1,7 +1,8 @@
 <template>
-  <section class="comment">
+  <section class="comment-container">
 
-    <div class="comment-left">rating</div>
+    <div class="comment">
+      <div class="comment-left">rating</div>
 
     <div class="comment-right">
       <div class="comment-right-upper">
@@ -18,10 +19,23 @@
       </div>
     </div>
 
-    <form v-if="isReplyActive">
+    <!-- <form v-if="isReplyActive">
       <input name="vitalInformation" v-model="replyInput" v-on:submit.prevent="submitForm">
       <a href="#" v-on:click="sendReplyComment(replyInput, index)">SUBMIT</a>
-    </form>
+    </form> -->
+    </div>
+
+      <div class="reply">
+
+      <div class="reply-card" v-for="(reply, index) in replies" :key="index">
+        <reply-card
+          @deleteReply="deleteReply"
+          :reply="reply.content"
+          :index="index"
+          :commentIndex="comment.index"/>
+        </div>
+      </div>
+
 
   </section>
 </template>
@@ -44,13 +58,17 @@ export default {
     index: {
       Type: Number,
       required: true
+    },
+    replies: {
+      Type: Array,
+      required: true
     }
   },
 
   methods: {
 
-    sendReplyComment(input, index) {
-      this.comments[index].replies.push(input)
+    sendReplyComment(input) {
+      this.replies.push(input)
     },
 
     replyComment() {
@@ -59,6 +77,10 @@ export default {
 
     deleteComment(index) {
       this.$emit('deleteComment', index)
+    },
+
+    deleteReply(index) {
+      this.replies.splice(index, 1)
     }
 
   }
@@ -94,6 +116,22 @@ export default {
   &-left {
     width: 100px;
     height: 100%;
+    background-color: colorPaletteSetting(core-light-grey);
+  }
+}
+
+.reply {
+  position: relative;
+  // background-color: firebrick;
+}
+
+.reply-card {
+  &::before {
+    position: absolute;
+    content: '';
+    left: 50px;
+    width: 2px;
+    height: 230px;
     background-color: colorPaletteSetting(core-light-grey);
   }
 }

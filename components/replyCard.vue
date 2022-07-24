@@ -6,7 +6,7 @@
       <div class="reply-right-upper">
 
       <form v-if="isUser">
-        <a href="#" v-on:click="deleteReply(index, commentIndex)">DELETE</a>
+        <a href="#" v-on:click="deleteReply(index)">DELETE</a>
       </form>
       
       <button @click="replyComment()">Reply</button>
@@ -19,7 +19,7 @@
 
     <form v-if="isReplyActive">
       <input name="vitalInformation" v-model="replyInput" v-on:submit.prevent="submitForm">
-      <a href="#" v-on:click="sendReplyComment(replyInput, index)">SUBMIT</a>
+      <a href="#" v-on:click="sendReplyComment(replyInput)">SUBMIT</a>
     </form>
   </section>
 </template>
@@ -36,21 +36,16 @@ export default {
     index: {
       Type: Number,
       required: true
-    },
-    commentIndex: {
-      Type: Number,
-      required: true
     }
   },
-
   data: () => ({
     isUser: true,
   }),
 
   methods: {
   
-    deleteReply(index, commentIndex) {
-      this.$emit('deleteReply', index, commentIndex)
+    deleteReply(index) {
+      this.$emit('deleteReply', index)
     }
   }
 }
